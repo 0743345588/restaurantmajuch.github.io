@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Majuch Hotel Restaurant</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #8B4513; /* Brown */
+            --secondary-color: #F5DEB3; /* Wheat */
+            --accent-color: #A0522D; /* Sienna */
+            --light-color: #FFF8DC; /* Cornsilk */
+            --dark-color: #333;
+            --highlight-color: #FFD700; /* Gold for best sellers */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Navigation */
+        .navbar {
+            background-color: var(--primary-color);
+            padding: 1rem 0;
+        }
+        
+        .navbar ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+        
+        .navbar a:hover {
+            color: var(--secondary-color);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+            border-radius: 8px;
+        }
+        
+        .hero-content h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero-content p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        /* Featured Dishes Grid */
+        .menu-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        .featured-dishes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        
+        .dish-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+            border: 1px solid #eee;
+        }
+        
+        .dish-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .dish-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .dish-details {
+            padding: 1.5rem;
+        }
+        
+        .item-info {
+            margin-bottom: 1rem;
+        }
+        
+        .item-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .item-price {
+            color: var(--accent-color);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        .item-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .quantity {
+            width: 50px;
+            text-align: center;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .add-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            flex-grow: 1;
+        }
+        
+        .add-btn:hover {
+            background-color: var(--accent-color);
+        }
+        
+        /* Best Seller Badge */
+        .best-seller {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--highlight-color);
+            color: var(--dark-color);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+        
+        /* Order Summary */
+        .order-summary {
+            background-color: rgba(231, 139, 19, 0.95);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .order-title {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .order-items {
+            margin-bottom: 1.5rem;
+        }
+        
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .order-item:last-child {
+            border-bottom: none;
+        }
+        
+        .item-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .action-btn {
+            background-color: aqua;
+            border: none;
+            cursor: pointer;
+            color: var(--primary-color);
+            font-size: 1rem;
+        }
+        
+        .action-btn:hover {
+            color: var(--accent-color);
+        }
+        
+        .order-total {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            font-size: 1.2rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--secondary-color);
+        }
+        
+        .checkout-btn {
+            width: 100%;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            font-size: 1.1rem;
+            background-color: var(--primary-color);
+        }
+        
+        .checkout-btn:hover {
+            background-color: var(--accent-color);
+        }
+        
+        .about-section {
+            background-color: black;
+            color: white;
+            text-align: justify;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            background-color: black;
+            color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .testimonial-card {
+            background-color: var(--light-color);
+            color: black;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .social-icons a {
+            color: white;
+            margin: 0 0.5rem;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            color: var(--secondary-color);
+        }
+        
+        /* Modal */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgb(0,0,0); 
+            background-color: rgba(0,0,0,0.4); 
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto; 
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; 
+            max-width: 500px;
+            border-radius: 8px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        input[type="text"], input[type="tel"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        /* Chat Container */
+        .chat-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .chat-toggle-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .chat-toggle-btn:hover {
+            background-color: var(--accent-color);
+            transform: scale(1.1);
+        }
+        
+        .chat-window {
+            display: none;
+            width: 350px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        .chat-header {
+            background-color: green;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chat-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+        
+        .close-chat {
+            background: none;
+            border: none;
+            color: yellow;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .chat-messages {
+            height: 300px;
+            overflow-y: auto;
+            padding: 15px;
+            background-color: var(--light-color);
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 18px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+        
+        .guest-message {
+            background-color: black;
+            color: white;
+            margin-left: auto;
+            border-top-right-radius: 5px;
+        }
+        
+        .admin-message {
+            background-color: var(--secondary-color);
+            margin-right: auto;
+            border-top-left-radius: 5px;
+        }
+        
+        .message-time {
+            font-size: 0.7rem;
+            color: #666;
+            margin-top: 5px;
+            text-align: right;
+        }
+        
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            background-color: white;
+            border-top: 1px solid #eee;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+        }
+        
+        .chat-input button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        
+        .chat-input button:hover {
+            background-color: purple;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .hero-content h2 {
+                font-size: 2rem;
+            }
+            
+            .featured-dishes-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .navbar ul {
+                gap: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .chat-window {
+                width: 300px;
+                right: 10px;
+                bottom: 80px;
+            }
+            
+            .chat-messages {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="About.html">About Us</a></li>
+            <li><a href="contact.menu.html">Contact</a></li>
+            <li><a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a></li>
+            <li><a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Welcome to The Majuch Restaurant</h2>
+                <p>Experience the finest culinary delights in a warm and inviting atmosphere. Our chefs prepare each dish with passion and the freshest ingredients.</p>
+                <a class="btn">Scroll for the dishes</a>
+            </div>
+        </section>
+
+
+        <!-- Featured Dishes -->
+        <section class="menu-section" id="featured-dishes">
+            <h2 class="section-title">Featured Dishes</h2>
+            <div class="featured-dishes-grid">
+                <!-- Dish 1: Grilled Salmon (Best Seller) -->
+                <div class="dish-card">
+                    <span class="best-seller">Best Seller</span>
+                    <img src="images/salmon.jpg" alt="Grilled Salmon" class="dish-img">
+                    <div class="dish-details">
+                        <div class="item-info">
+                            <div class="item-name">Grilled Salmon</div>
+                            <div class="item-price">22,000 ssp</div>
+                        </div>
+                        <div class="item-controls">
+                            <input type="number" class="quantity" value="1" min="1">
+                            <button class="add-btn" data-name="Grilled Salmon" data-price="22000">Add</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dish 2: Ribeye Steak (Best Seller) -->
+                <div class="dish-card">
+                    <span class="best-seller">Best Seller</span>
+                    <img src="images/Ribeye.jpg" alt="Ribeye Steak" class="dish-img">
+                    <div class="dish-details">
+                        <div class="item-info">
+                            <div class="item-name">Ribeye Steak</div>
+                            <div class="item-price">20,000 ssp</div>
+                        </div>
+                        <div class="item-controls">
+                            <input type="number" class="quantity" value="1" min="1">
+                            <button class="add-btn" data-name="Ribeye Steak" data-price="20000">Add</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dish 3: Beverages -->
+                <div class="dish-card">
+                    <img src="images/Beverages.jpg" alt="Beverages" class="dish-img">
+                    <div class="dish-details">
+                        <div class="item-info">
+                            <div class="item-name">Beverages</div>
+                            <div class="item-price">30,500 ssp</div>
+                        </div>
+                        <div class="item-controls">
+                            <input type="number" class="quantity" value="1" min="1">
+                            <button class="add-btn" data-name="Beverages" data-price="30500">Add</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dish 4: Vegetable Risotto -->
+                <div class="dish-card">
+                    <img src="images/Risotto.jpg" alt="Vegetable Risotto" class="dish-img">
+                    <div class="dish-details">
+                        <div class="item-info">
+                            <div class="item-name">Vegetable Risotto</div>
+                            <div class="item-price">18,500 ssp</div>
+                        </div>
+                        <div class="item-controls">
+                            <input type="number" class="quantity" value="1" min="1">
+                            <button class="add-btn" data-name="Vegetable Risotto" data-price="18500">Add</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dish 5: Spaghetti Carbonara -->
+                <div class="dish-card">
+                    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Spaghetti Carbonara" class="dish-img">
+                    <div class="dish-details">
+                        <div class="item-info">
+                            <div class="item-name">Spaghetti Carbonara</div>
+                            <div class="item-price">19,000 ssp</div>
+                        </div>
+                        <div class="item-controls">
+                            <input type="number" class="quantity" value="1" min="1">
+                            <button class="add-btn" data-name="Spaghetti Carbonara" data-price="19000">Add</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dish 6: Caesar Salad -->
+                <div class="dish-card">
+                    <img src="images/salad.jpg" alt="Caesar Salad" class="dish-img">
+                    <div class="dish-details">
+                        <div class="item-info">
+                            <div class="item-name">Caesar Salad</div>
+                            <div class="item-price">15,500 ssp</div>
+                        </div>
+                        <div class="item-controls">
+                            <input type="number" class="quantity" value="1" min="1">
+                            <button class="add-btn" data-name="Caesar Salad" data-price="15500">Add</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dish 7: Chicken Alfredo -->
+                <div class="dish-card">
+                    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Chicken Alfredo" class="dish-img">
+                    <div class="dish-details">
+                        <div class="item-info">
+                            <div class="item-name">Chicken Alfredo</div>
+                            <div class="item-price">24,000 ssp</div>
+                        </div>
+                        <div class="item-controls">
+                            <input type="number" class="quantity" value="1" min="1">
+                            <button class="add-btn" data-name="Chicken Alfredo" data-price="24000">Add</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dish 8: Tiramisu -->
+                <div class="dish-card">
+                    <img src="images/Tiramisu.jpg" alt="Tiramisu" class="dish-img">
+                    <div class="dish-details">
+                        <div class="item-info">
+                            <div class="item-name">Tiramisu</div>
+                            <div class="item-price">8,500 ssp</div>
+                        </div>
+                        <div class="item-controls">
+                            <input type="number" class="quantity" value="1" min="1">
+                            <button class="add-btn" data-name="Tiramisu" data-price="8500">Add</button>
+                        </div>
+                    </div>
+                </div>
+                 <!-- Dish 8: Lobster -->
+                <div class="dish-card">
+                    <img src="images/lobster.jpg" alt="lobster" class="dish-img">
+                    <div class="dish-details">
+                        <div class="item-info">
+                            <div class="item-name">Lobster</div>
+                            <div class="item-price">13,000 ssp</div>
+                        </div>
+                        <div class="item-controls">
+                            <input type="number" class="quantity" value="1" min="1">
+                            <button class="add-btn" data-name="Tiramisu" data-price="13000">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Order Summary -->
+        <section class="order-summary">
+            <h2 class="order-title">Your Order</h2>
+            <div class="order-items" id="orderItems">
+                <p class="empty-order">Your order is empty. Add items from the menu above.</p>
+            </div>
+            <div class="order-total">
+                <span>Total:</span>
+                <span id="orderTotal">0.00 ssp</span>
+            </div>
+            <button class="btn checkout-btn" id="checkoutBtn">Place Order</button>
+        </section>
+
+        <!-- Order Form Modal -->
+        <div id="orderFormModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Order Details</h2>
+                <form id="orderForm">
+                    <label for="customerName">Name:</label>
+                    <input type="text" id="customerName" required>
+                    <label for="customerPhone">Phone:</label>
+                    <input type="tel" id="customerPhone" required>
+                    <label for="customerAddress">Address:</label>
+                    <input type="text" id="customerAddress" required>
+                    <button type="submit" class="btn"><a href="succesful.html">Submit Order</a></button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Testimonials -->
+        <section class="testimonials">
+            <h2 class="section-title">What Our Guests Say</h2>
+            <div class="testimonial-card">
+                <p class="testimonial-author">Sarah Chol Lam</p>
+                <p class="testimonial-text">"The Ribeye Steak was cooked to perfection. We'll definitely be back!"</p>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-author">Michael Chan Gany</p>
+                <p class="testimonial-text">"Billiny's stands out for its creative dishes and warm atmosphere."</p>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-author">Emily Teny Dak</p>
+                <p class="testimonial-text">"The service was excellent, and the food was even better!"</p>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-author">Johnson Deng Koang</p>
+                <p class="testimonial-text">"A delightful experience! The Tiramisu is a must-try!"</p>
+            </div>
+        </section>
+    </div>
+
+    
+    <!-- Chat Container -->
+    <div class="chat-container">
+        <button class="chat-toggle-btn" id="chatToggle">
+            <i class="fas fa-comments"></i>
+        </button>
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">
+                <h3>Guest Feedback</h3>
+                <button class="close-chat" id="closeChat">&times;</button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <!-- Messages will appear here -->
+            </div>
+            <div class="chat-input">
+                <input type="text" id="chatMessageInput" placeholder="Type your message...">
+                <button id="sendMessageBtn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const orderItems = document.getElementById('orderItems');
+            const orderTotal = document.getElementById('orderTotal');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            const addButtons = document.querySelectorAll('.add-btn');
+            const orderFormModal = document.getElementById('orderFormModal');
+            const closeModal = document.querySelector('.close');
+            const orderForm = document.getElementById('orderForm');
+            
+            let orders = [];
+            
+            // Load orders from localStorage
+            if (localStorage.getItem('currentOrder')) {
+                orders = JSON.parse(localStorage.getItem('currentOrder'));
+                updateOrderSummary();
+            }
+            
+            // Add to Order
+            addButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const name = this.getAttribute('data-name');
+                    const price = parseInt(this.getAttribute('data-price'));
+                    const quantity = parseInt(this.parentElement.querySelector('.quantity').value);
+                    
+                    addToOrder(name, price, quantity);
+                });
+            });
+            
+            function addToOrder(name, price, quantity) {
+                const existingItem = orders.find(item => item.name === name);
+                
+                if (existingItem) {
+                    existingItem.quantity += quantity;
+                } else {
+                    orders.push({ name, price, quantity });
+                }
+                
+                saveCurrentOrder();
+                updateOrderSummary();
+            }
+            
+            function updateOrderSummary() {
+                if (orders.length === 0) {
+                    orderItems.innerHTML = '<p class="empty-order">Your order is empty. Add items from the menu above.</p>';
+                    orderTotal.textContent = '0.00 ssp';
+                    return;
+                }
+                
+                let html = '';
+                let total = 0;
+                
+                orders.forEach((item, index) => {
+                    const itemTotal = item.price * item.quantity;
+                    total += itemTotal;
+                    
+                    html += `
+                        <div class="order-item" data-index="${index}">
+                            <div>
+                                <span class="item-name">${item.name}</span>
+                                <span class="item-quantity">x${item.quantity}</span>
+                            </div>
+                            <div>
+                                <span class="item-price">${itemTotal.toLocaleString()} ssp</span>
+                                <div class="item-actions">
+                                    <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
+                                    <button class="action-btn remove-btn"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                orderItems.innerHTML = html;
+                orderTotal.textContent = `${total.toLocaleString()} ssp`;
+                
+                // Add event listeners to action buttons
+                document.querySelectorAll('.edit-btn').forEach(btn => {
+                    btn.addEventListener('click', editItem);
+                });
+                
+                document.querySelectorAll('.remove-btn').forEach(btn => {
+                    btn.addEventListener('click', removeItem);
+                });
+            }
+            
+            function editItem() {
+                const index = this.closest('.order-item').dataset.index;
+                const newQty = prompt(`Edit quantity for ${orders[index].name}:`, orders[index].quantity);
+                
+                if (newQty && !isNaN(newQty) && newQty > 0) {
+                    orders[index].quantity = parseInt(newQty);
+                    saveCurrentOrder();
+                    updateOrderSummary();
+                }
+            }
+            
+            function removeItem() {
+                const index = this.closest('.order-item').dataset.index;
+                if (confirm(`Remove ${orders[index].name} from order?`)) {
+                    orders.splice(index, 1);
+                    saveCurrentOrder();
+                    updateOrderSummary();
+                }
+            }
+            
+            function saveCurrentOrder() {
+                localStorage.setItem('currentOrder', JSON.stringify(orders));
+            }
+            
+            checkoutBtn.addEventListener('click', function() {
+                if (orders.length === 0) {
+                    alert('Your order is empty!');
+                    return;
+                }
+                
+                // Show the order form modal
+                orderFormModal.style.display = "block";
+            });
+
+            // Close modal
+            closeModal.onclick = function() {
+                orderFormModal.style.display = "none";
+            }
+
+    orderForm.addEventListener('submit', async function(event) {
+    event.preventDefault();
+    const customerName = document.getElementById('customerName').value;
+    const customerPhone = document.getElementById('customerPhone').value;
+    const customerAddress = document.getElementById('customerAddress').value;
+    
+    // Calculate total (remove commas and currency text)
+    const total = parseFloat(orderTotal.textContent.replace(' ssp', '').replace(/,/g, ''));
+    
+    // Prepare items data for backend
+    const itemsData = orders.map(item => ({
+        item_name: item.name,
+        quantity: item.quantity,
+        price: item.price
+    }));
+
+    // Create order data object
+    const orderData = {
+        customer_name: customerName,
+        customer_phone: customerPhone,
+        customer_address: customerAddress,
+        total: total,
+        items: itemsData
+    };
+
+           
+    try {
+        // Save order to dashboard
+                saveOrderToDashboard(orderData);
+        // Send to server
+        const response = await fetch('process_orders.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(orderData)
+        });
+
+        const result = await response.json();
+        
+        if (result.success) {
+          alert(`${result.message} Order ID: ${result.orderId}`);
+                    // Clear orders and close modal
+                    orders = [];
+                    localStorage.removeItem('currentOrder');
+                    updateOrderSummary();
+                    orderFormModal.style.display = "none";
+                    
+                    // Update order status in dashboard
+                    updateOrderStatusInDashboard(orderData, 'completed');
+        } else {
+            throw new Error(result.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+                saveFailedOrder(orderData, error.message);
+                alert('Order was saved locally but failed to reach server. Error: ' + error.message);
+                // Clear orders and close modal
+                orders = [];
+                localStorage.removeItem('currentOrder');
+                updateOrderSummary();
+                orderFormModal.style.display = "none";
+                
+                // Update order status in dashboard
+                updateOrderStatusInDashboard(orderData, 'failed');
+    }
+});
+            // Save order to dashboard
+            function saveOrderToDashboard(orderData) {
+                // Get existing restaurant data or initialize
+                let restaurantData = JSON.parse(localStorage.getItem('restaurantData')) || {
+                    orders: [],
+                    customers: {},
+                    nextOrderId: 1
+                };
+                
+                // Assign order ID
+                orderData.id = restaurantData.nextOrderId++;
+                
+                // Add to orders
+                restaurantData.orders.push(orderData);
+                
+                // Update customer data
+                if (!restaurantData.customers[orderData.customerPhone]) {
+                    restaurantData.customers[orderData.customerPhone] = {
+                        name: orderData.customerName,
+                        phone: orderData.customerPhone,
+                        address: orderData.customerAddress,
+                        orderCount: 0,
+                        totalSpent: 0,
+                        lastOrder: ""
+                    };
+                }
+                
+                restaurantData.customers[orderData.customerPhone].orderCount++;
+                restaurantData.customers[orderData.customerPhone].totalSpent += orderData.total;
+                restaurantData.customers[orderData.customerPhone].lastOrder = new Date().toISOString();
+                
+                // Save back to localStorage
+                localStorage.setItem('restaurantData', JSON.stringify(restaurantData));
+            }
+            
+            // Update order status in dashboard
+            function updateOrderStatusInDashboard(orderData, status) {
+                let restaurantData = JSON.parse(localStorage.getItem('restaurantData')) || { orders: [] };
+                
+                // Find the order and update its status
+                const orderIndex = restaurantData.orders.findIndex(order => 
+                    order.customerPhone === orderData.customerPhone && 
+                    order.date === orderData.date
+                );
+                
+                if (orderIndex !== -1) {
+                    restaurantData.orders[orderIndex].status = status;
+                    localStorage.setItem('restaurantData', JSON.stringify(restaurantData));
+                }
+            }
+            
+            // Save failed order
+            function saveFailedOrder(orderData, errorMessage) {
+                // Get existing failed orders or initialize
+                const failedOrders = JSON.parse(localStorage.getItem('failedOrders')) || [];
+                
+                // Add current order with error
+                failedOrders.push({
+                    ...orderData,
+                    error: errorMessage,
+                    timestamp: new Date().toISOString()
+                });
+                
+                // Save back to localStorage
+                localStorage.setItem('failedOrders', JSON.stringify(failedOrders));
+            }
+            
+            // Chat functionality
+            const chatToggle = document.getElementById('chatToggle');
+            const chatWindow = document.getElementById('chatWindow');
+            const closeChat = document.getElementById('closeChat');
+            const chatMessages = document.getElementById('chatMessages');
+            const chatMessageInput = document.getElementById('chatMessageInput');
+            const sendMessageBtn = document.getElementById('sendMessageBtn');
+            
+            // Load saved messages
+            loadChatMessages();
+            
+            // Toggle chat window
+            chatToggle.addEventListener('click', function() {
+                chatWindow.style.display = chatWindow.style.display === 'block' ? 'none' : 'block';
+            });
+            
+            closeChat.addEventListener('click', function() {
+                chatWindow.style.display = 'none';
+            });
+            
+            // Send message
+            function sendMessage() {
+                const messageText = chatMessageInput.value.trim();
+                if (messageText === '') return;
+                
+                const message = {
+                    text: messageText,
+                    sender: 'guest',
+                    timestamp: new Date().toISOString()
+                };
+                
+                // Add to UI
+                addMessageToChat(message);
+                
+                // Save to localStorage
+                saveMessage(message);
+                
+                // Clear input
+                chatMessageInput.value = '';
+                
+                // Simulate admin response after 2 seconds
+                setTimeout(() => {
+                    const responses = [
+                        "Thank you for your feedback!",
+                        "We appreciate your message!",
+                        "Our team will review your comments.",
+                        "Thanks for reaching out to us!",
+                        "We value your input!"
+                    ];
+                    
+                    const adminMessage = {
+                        text: responses[Math.floor(Math.random() * responses.length)],
+                        sender: 'admin',
+                        timestamp: new Date().toISOString()
+                    };
+                    
+                    addMessageToChat(adminMessage);
+                    saveMessage(adminMessage);
+                }, 2000);
+            }
+            
+            // Send message on button click or Enter key
+            sendMessageBtn.addEventListener('click', sendMessage);
+            chatMessageInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+            
+            // Add message to chat UI
+            function addMessageToChat(message) {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message');
+                messageDiv.classList.add(message.sender + '-message');
+                
+                const time = new Date(message.timestamp);
+                const timeString = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                
+                messageDiv.innerHTML = `
+                    <div>${message.text}</div>
+                    <div class="message-time">${timeString}</div>
+                `;
+                
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            // Save message to localStorage
+            function saveMessage(message) {
+                let messages = JSON.parse(localStorage.getItem('billiny-chat-messages')) || [];
+                messages.push(message);
+                localStorage.setItem('billiny-chat-messages', JSON.stringify(messages));
+            }
+            
+            // Load messages from localStorage
+            function loadChatMessages() {
+                const messages = JSON.parse(localStorage.getItem('billiny-chat-messages')) || [];
+                messages.forEach(message => {
+                    addMessageToChat(message);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

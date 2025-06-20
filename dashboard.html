@@ -1,0 +1,1445 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - DI-WAITA Restaurant</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> <!-- Updated CDN link -->
+    <style>
+        :root {
+            --primary-color: #8B4513; /* Brown */
+            --secondary-color: #F5DEB3; /* Wheat */
+            --accent-color: #A0522D; /* Sienna */
+            --light-color: #FFF8DC; /* Cornsilk */
+            --dark-color: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color:rgb(50, 36, 1);
+            color: var(--light-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+            background-color:#333;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+        }
+        .summary {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .summary-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(251, 247, 247, 0.916);
+            flex: 1;
+            min-width: 200px;
+            margin: 0.5rem;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .summary-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .summary-card p {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .order-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(248, 246, 246, 0.92);
+        }
+
+        .order-table th, .order-table td {
+            border: 1px solid #ddd;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .order-table th {
+            background-color: var(--dark-color);
+            color: var(--light-color);
+        }
+
+        .order-table tr:nth-child(even) {
+            background-color: rgba(243, 175, 49, 0.958);
+        }
+
+        .order-table tr:hover {
+            background-color: rgba(160, 82, 45, 0.1);
+        }
+
+        .status-badge {
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: capitalize;
+        }
+
+        .status-badge.pending {
+            background-color: #FFF3CD;
+            color: #856404;
+        }
+
+        .status-badge.completed {
+            background-color: #D4EDDA;
+            color: #155724;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-color);
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: red;
+            font-size: 1rem;
+            margin: 0 0.3rem;
+            transition: color 0.3s;
+        }
+
+        .action-btn:hover {
+            color: var(--accent-color);
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--secondary-color);
+        }
+
+        .tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            background-color: var(--light-color);
+            border: 1px solid var(--secondary-color);
+            border-bottom: none;
+            margin-right: 0.5rem;
+            border-radius: 5px 5px 0 0;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background-color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        .tab:hover:not(.active) {
+            background-color: rgba(245, 222, 179, 0.5);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 400px;
+            margin-bottom: 2rem;
+            background-color: white;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 10px rgba(247, 241, 241, 0.938);
+        }
+
+        .data-collection-notice {
+            background-color: #13f5ed;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #4A90E2;
+            color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .summary {
+                flex-direction: column;
+            }
+
+            .summary-card {
+                margin: 0.5rem 0;
+            }
+
+            .order-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <ul>
+            <li><a href="menu.php">Home</a></li>
+            <li><a href="About.php">About Us</a></li>
+            <li><a href="contact.menu.php">Contact</a></li>
+            <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
+            <li><a href="https://instagram.com" target="_blank">Instagram</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+
+        <div class="data-collection-notice">
+            <p><strong>Note:</strong> This dashboard displays data collected from actual website interactions and server database.</p>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="summary">
+            <div class="summary-card">
+                <h3>Total Orders</h3>
+                <p id="totalOrders">0</p>
+                <small id="orderChange">Loading...</small>
+            </div>
+            <div class="summary-card">
+                <h3>Total Revenue</h3>
+                <p id="totalRevenue">0.00 ssp</p>
+                <small id="revenueChange">Loading...</small>
+            </div>
+            <div class="summary-card">
+                <h3>Best Seller</h3>
+                <p id="bestSeller">None</p>
+                <small id="bestSellerStats">No data yet</small>
+            </div>
+            <div class="summary-card">
+                <h3>Total Customers</h3>
+                <p id="totalCustomers">0</p>
+                <small id="customerChange">Loading...</small>
+            </div>
+        </div>
+
+        <!-- Tabs Navigation -->
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('orders')">Orders</div>
+            <div class="tab" onclick="switchTab('customers')">Customers</div>
+            <div class="tab" onclick="switchTab('contacts')">Contact Forms</div>
+            <div class="tab" onclick="switchTab('analytics')">Analytics</div>
+            <div class="tab" onclick="switchTab('settings')">Settings</div>
+        </div>
+
+        <!-- Orders Tab Content -->
+        <div id="orders-tab" class="tab-content active">
+            <h2>Current Orders</h2>
+            <div style="margin-bottom: 1rem; display: flex; justify-content: space-between;">
+                <div>
+                    <label for="orderFilter">Filter by: </label>
+                    <select id="orderFilter" onchange="filterOrders()">
+                        <option value="all">All Orders</option>
+                        <option value="today">Today</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                        <option value="pending">Pending</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+                <button class="btn" onclick="exportOrders()">
+                    <i class="fas fa-download"></i> Export Orders
+                </button>
+            </div>
+            <div id="no-orders-message" style="display: none; text-align: center; padding: 2rem;">
+                <p>No orders have been placed yet. Data will appear here when customers place orders.</p>
+            </div>
+            <table class="order-table" id="orders-table" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Date</th>
+                        <th>Items</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="orderTableBody">
+                    <!-- Dynamic order rows will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Customers Tab Content -->
+        <div id="customers-tab" class="tab-content">
+            <h2>Customer Management</h2>
+            <div class="chart-container" id="customerChart">
+                <canvas id="customerChartCanvas"></canvas>
+            </div>
+            <div id="no-customers-message" style="display: none; text-align: center; padding: 2rem;">
+                <p>No customer data available yet. Data will appear here when customers place orders.</p>
+            </div>
+            <table class="order-table" id="customers-table" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Customer ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Orders</th>
+                        <th>Total Spent</th>
+                        <th>Last Order</th>
+                    </tr>
+                </thead>
+                <tbody id="customerTableBody">
+                    <!-- Dynamic customer rows will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Contact Forms Tab Content -->
+        <div id="contacts-tab" class="tab-content">
+            <h2>Contact Form Submissions</h2>
+            <div style="margin-bottom: 1rem; display: flex; justify-content: space-between;">
+                <div>
+                    <label for="contactFilter">Filter by: </label>
+                    <select id="contactFilter" onchange="filterContacts()">
+                        <option value="all">All Messages</option>
+                        <option value="today">Today</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                        <option value="unread">Unread</option>
+                        <option value="read">Read</option>
+                    </select>
+                </div>
+                <button class="btn" onclick="exportContacts()">
+                    <i class="fas fa-download"></i> Export Contacts
+                </button>
+            </div>
+            <div id="no-contacts-message" style="display: none; text-align: center; padding: 2rem;">
+                <p>No contact form submissions yet. Data will appear here when customers submit the contact form.</p>
+            </div>
+            <table class="order-table" id="contacts-table" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Subject</th>
+                        <th>Message</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="contactTableBody">
+                    <!-- Dynamic contact rows will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Analytics Tab Content -->
+        <div id="analytics-tab" class="tab-content">
+            <h2>Sales Analytics</h2>
+            <div id="no-analytics-message" style="display: none; text-align: center; padding: 2rem;">
+                <p>No analytics data available yet. Data will appear here as customers interact with your website.</p>
+            </div>
+            <div class="chart-container" id="salesChart" style="display: none;">
+                <canvas id="salesChartCanvas"></canvas>
+            </div>
+            <div class="chart-container" id="productChart" style="display: none;">
+                <canvas id="productChartCanvas"></canvas>
+            </div>
+        </div>
+
+        <!-- Settings Tab Content -->
+        <div id="settings-tab" class="tab-content">
+            <h2>Dashboard Settings</h2>
+            <div style="background-color: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
+                <h3>Data Collection Settings</h3>
+                <div style="margin-bottom: 1rem;">
+                    <input type="checkbox" id="collectUser Data" checked>
+                    <label for="collectUser Data">Collect anonymous user data for analytics</label>
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <input type="checkbox" id="trackBehavior" checked>
+                    <label for="trackBehavior">Track user behavior patterns</label>
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <input type="checkbox" id="storeOrderHistory" checked>
+                    <label for="storeOrderHistory">Store complete order history</label>
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <input type="checkbox" id="storeContactForms" checked>
+                    <label for="storeContactForms">Store contact form submissions</label>
+                </div>
+                <button class="btn" onclick="saveSettings()">Save Settings</button>
+            </div>
+            
+            <div style="background-color: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); margin-top: 2rem;">
+                <h3>Data Export/Import</h3>
+                <div style="margin-bottom: 1rem;">
+                    <button class="btn" onclick="exportAllData()">
+                        <i class="fas fa-file-export"></i> Export All Data
+                    </button>
+                </div>
+                <div>
+                    <label for="dataFile">Import Data: </label>
+                    <input type="file" id="dataFile" accept=".json">
+                    <button class="btn" onclick="importData()">
+                        <i class="fas fa-file-import"></i> Import
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Chart.js for analytics charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+        // Initialize empty data structure
+        function initializeData() {
+            if (!localStorage.getItem('restaurantData')) {
+                const initialData = {
+                    orders: [],
+                    contacts: [],
+                    customers: {},
+                    settings: {
+                        collectUserData: true,
+                        trackBehavior: true,
+                        storeOrderHistory: true,
+                        storeContactForms: true
+                    },
+                    analytics: {
+                        pageViews: {},
+                        popularItems: {},
+                        conversionRates: {}
+                    },
+                    nextOrderId: 1,
+                    nextContactId: 1
+                };
+                localStorage.setItem('restaurantData', JSON.stringify(initialData));
+            }
+        }
+
+        // Get DOM elements
+        const orderTableBody = document.getElementById('orderTableBody');
+        const customerTableBody = document.getElementById('customerTableBody');
+        const contactTableBody = document.getElementById('contactTableBody');
+        const totalOrders = document.getElementById('totalOrders');
+        const totalRevenue = document.getElementById('totalRevenue');
+        const bestSeller = document.getElementById('bestSeller');
+        const bestSellerStats = document.getElementById('bestSellerStats');
+        const totalCustomers = document.getElementById('totalCustomers');
+        const orderChange = document.getElementById('orderChange');
+        const revenueChange = document.getElementById('revenueChange');
+        const customerChange = document.getElementById('customerChange');
+
+        // Initialize charts
+        let salesChart, productChart, customerChart;
+
+        // Load data from localStorage and server
+        async function getRestaurantData() {
+            // Get local data
+            const localData = JSON.parse(localStorage.getItem('restaurantData')) || {
+                orders: [],
+                contacts: [],
+                customers: {},
+                settings: {
+                    collectUserData: true,
+                    trackBehavior: true,
+                    storeOrderHistory: true,
+                    storeContactForms: true
+                },
+                analytics: {
+                    pageViews: {},
+                    popularItems: {},
+                    conversionRates: {}
+                },
+                nextOrderId: 1,
+                nextContactId: 1
+            };
+
+            try {
+                // Try to get server data
+                const [ordersResponse, contactsResponse] = await Promise.all([
+                    fetch('http://localhost:3000/api/orders'),
+                    fetch('http://localhost:3000/api/contacts')
+                ]);
+                
+                // Process orders
+                if (ordersResponse.ok) {
+                    const serverOrders = await ordersResponse.json();
+                    
+                    // Merge server orders with local orders
+                    const serverOrderIds = new Set(serverOrders.map(o =>                    o.id));
+                    const combinedOrders = [...serverOrders];
+                    
+                    // Add local orders that aren't in server
+                    for (const localOrder of localData.orders) {
+                        if (!serverOrderIds.has(localOrder.id)) {
+                            combinedOrders.push(localOrder);
+                        }
+                    }
+                    
+                    // Update local data with merged orders
+                    localData.orders = combinedOrders;
+                    
+                    // Update nextOrderId to be higher than any existing order
+                    if (combinedOrders.length > 0) {
+                        const maxId = Math.max(...combinedOrders.map(o => o.id));
+                        localData.nextOrderId = maxId + 1;
+                    }
+                }
+                
+                // Process contacts
+                if (contactsResponse.ok) {
+                    const serverContacts = await contactsResponse.json();
+                    
+                    // Merge server contacts with local contacts
+                    const serverContactIds = new Set(serverContacts.map(c => c.id));
+                    const combinedContacts = [...serverContacts];
+                    
+                    // Add local contacts that aren't in server
+                    for (const localContact of localData.contacts) {
+                        if (!serverContactIds.has(localContact.id)) {
+                            combinedContacts.push(localContact);
+                        }
+                    }
+                    
+                    // Update local data with merged contacts
+                    localData.contacts = combinedContacts;
+                    
+                    // Update nextContactId to be higher than any existing contact
+                    if (combinedContacts.length > 0) {
+                        const maxId = Math.max(...combinedContacts.map(c => c.id));
+                        localData.nextContactId = maxId + 1;
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching server data:', error);
+            }
+
+            return localData;
+        }
+
+        function saveRestaurantData(data) {
+            localStorage.setItem('restaurantData', JSON.stringify(data));
+        }
+
+        async function loadDashboard() {
+            initializeData();
+            await loadOrders();
+            loadCustomers();
+            loadContacts();
+            updateSummary();
+            initCharts();
+            loadSettings();
+        }
+
+        async function loadOrders(filter = 'all') {
+            const restaurantData = await getRestaurantData();
+            orderTableBody.innerHTML = ''; // Clear existing rows
+            
+            let filteredOrders = [...restaurantData.orders];
+            
+            // Apply filters
+            const now = new Date();
+            switch(filter) {
+                case 'today':
+                    filteredOrders = filteredOrders.filter(order => {
+                        const orderDate = new Date(order.date);
+                        return orderDate.toDateString() === now.toDateString();
+                    });
+                    break;
+                case 'week':
+                    const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+                    filteredOrders = filteredOrders.filter(order => new Date(order.date) >= oneWeekAgo);
+                    break;
+                case 'month':
+                    const oneMonthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+                    filteredOrders = filteredOrders.filter(order => new Date(order.date) >= oneMonthAgo);
+                    break;
+                case 'pending':
+                    filteredOrders = filteredOrders.filter(order => order.status === 'pending');
+                    break;
+                case 'completed':
+                    filteredOrders = filteredOrders.filter(order => order.status === 'completed');
+                    break;
+            }
+            
+            // Sort by date (newest first)
+            filteredOrders.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            if (filteredOrders.length === 0) {
+                document.getElementById('no-orders-message').style.display = 'block';
+                document.getElementById('orders-table').style.display = 'none';
+            } else {
+                document.getElementById('no-orders-message').style.display = 'none';
+                document.getElementById('orders-table').style.display = 'table';
+                
+                filteredOrders.forEach(order => {
+                    const row = document.createElement('tr');
+                    const orderDate = new Date(order.date);
+                    const formattedDate = orderDate.toLocaleDateString() + ' ' + orderDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                    
+                    // Create items list
+                    const itemsList = order.items.map(item => 
+                        `${item.name} (${item.quantity} × ${item.price.toFixed(2)} ssp)`
+                    ).join(', ');
+                    
+                    row.innerHTML = `
+                        <td>${order.id}</td>
+                        <td>${order.customerName}<br><small>${order.customerPhone}</small></td>
+                        <td>${formattedDate}</td>
+                        <td>${itemsList}</td>
+                        <td>${order.total.toFixed(2)} ssp</td>
+                        <td><span class="status-badge ${order.status}">${order.status}</span></td>
+                        <td>
+                            <button class="action-btn" onclick="editOrder(${order.id})" title="Edit"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn" onclick="viewOrder(${order.id})" title="View"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn" onclick="deleteOrder(${order.id})" title="Delete"><i class="fas fa-trash"></i></button>
+                            ${order.status === 'pending' ? 
+                                `<button class="action-btn" onclick="completeOrder(${order.id})" title="Mark as Complete"><i class="fas fa-check"></i></button>` : ''}
+                        </td>
+                    `;
+                    orderTableBody.appendChild(row);
+                });
+            }
+        }
+
+        async function loadCustomers() {
+            const restaurantData = await getRestaurantData();
+            customerTableBody.innerHTML = ''; // Clear existing rows
+            
+            const customers = Object.values(restaurantData.customers);
+            
+            if (customers.length === 0) {
+                document.getElementById('no-customers-message').style.display = 'block';
+                document.getElementById('customers-table').style.display = 'none';
+                document.getElementById('customerChart').style.display = 'none';
+            } else {
+                document.getElementById('no-customers-message').style.display = 'none';
+                document.getElementById('customers-table').style.display = 'table';
+                document.getElementById('customerChart').style.display = 'block';
+                
+                // Sort by total spent (highest first)
+                customers.sort((a, b) => b.totalSpent - a.totalSpent);
+                
+                customers.forEach((customer, index) => {
+                    const row = document.createElement('tr');
+                    const lastOrderDate = customer.lastOrder ? new Date(customer.lastOrder).toLocaleDateString() : 'Never';
+                    
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td>${customer.name}</td>
+                        <td>${customer.email || 'N/A'}</td>
+                        <td>${customer.phone}</td>
+                        <td>${customer.orderCount}</td>
+                        <td>${customer.totalSpent.toFixed(2)} ssp</td>
+                        <td>${lastOrderDate}</td>
+                    `;
+                    customerTableBody.appendChild(row);
+                });
+            }
+        }
+
+        async function loadContacts(filter = 'all') {
+            const restaurantData = await getRestaurantData();
+            contactTableBody.innerHTML = ''; // Clear existing rows
+            
+            let filteredContacts = [...restaurantData.contacts];
+            
+            // Apply filters
+            const now = new Date();
+            switch(filter) {
+                case 'today':
+                    filteredContacts = filteredContacts.filter(contact => {
+                        const contactDate = new Date(contact.date);
+                        return contactDate.toDateString() === now.toDateString();
+                    });
+                    break;
+                case 'week':
+                    const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+                    filteredContacts = filteredContacts.filter(contact => new Date(contact.date) >= oneWeekAgo);
+                    break;
+                case 'month':
+                    const oneMonthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+                    filteredContacts = filteredContacts.filter(contact => new Date(contact.date) >= oneMonthAgo);
+                    break;
+                case 'unread':
+                    filteredContacts = filteredContacts.filter(contact => !contact.read);
+                    break;
+                case 'read':
+                    filteredContacts = filteredContacts.filter(contact => contact.read);
+                    break;
+            }
+            
+            // Sort by date (newest first)
+            filteredContacts.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            if (filteredContacts.length === 0) {
+                document.getElementById('no-contacts-message').style.display = 'block';
+                document.getElementById('contacts-table').style.display = 'none';
+            } else {
+                document.getElementById('no-contacts-message').style.display = 'none';
+                document.getElementById('contacts-table').style.display = 'table';
+                
+                filteredContacts.forEach(contact => {
+                    const row = document.createElement('tr');
+                    const contactDate = new Date(contact.date);
+                    const formattedDate = contactDate.toLocaleDateString() + ' ' + contactDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                    
+                    // Truncate message for display
+                    const truncatedMessage = contact.message.length > 50 
+                        ? contact.message.substring(0, 50) + '...' 
+                        : contact.message;
+                    
+                    row.innerHTML = `
+                        <td>${formattedDate}</td>
+                        <td>${contact.name}</td>
+                        <td>${contact.email || 'N/A'}</td>
+                        <td>${contact.phone || 'N/A'}</td>
+                        <td>${contact.subject || 'No subject'}</td>
+                        <td>${truncatedMessage}</td>
+                        <td><span class="status-badge ${contact.read ? 'completed' : 'pending'}">${contact.read ? 'read' : 'unread'}</span></td>
+                        <td>
+                            <button class="action-btn" onclick="viewContact(${contact.id})" title="View"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn" onclick="markContactRead(${contact.id}, ${!contact.read})" title="${contact.read ? 'Mark Unread' : 'Mark Read'}">
+                                <i class="fas fa-${contact.read ? 'envelope' : 'envelope-open'}"></i>
+                            </button>
+                            <button class="action-btn" onclick="deleteContact(${contact.id})" title="Delete"><i class="fas fa-trash"></i></button>
+                        </td>
+                    `;
+                    
+                    // Highlight unread messages
+                    if (!contact.read) {
+                        row.style.backgroundColor = 'rgba(255, 243, 205, 0.3)';
+                    }
+                    
+                    contactTableBody.appendChild(row);
+                });
+            }
+        }
+
+        async function updateSummary() {
+            const restaurantData = await getRestaurantData();
+            
+            // Update order count
+            totalOrders.textContent = restaurantData.orders.length;
+            
+            // Calculate total revenue
+            const revenue = restaurantData.orders.reduce((sum, order) => sum + order.total, 0);
+            totalRevenue.textContent = revenue.toFixed(2) + ' ssp';
+            
+            // Update customer count
+            totalCustomers.textContent = Object.keys(restaurantData.customers).length;
+            
+            // Calculate best seller
+            const itemCounts = {};
+            restaurantData.orders.forEach(order => {
+                order.items.forEach(item => {
+                    if (!itemCounts[item.name]) {
+                        itemCounts[item.name] = 0;
+                    }
+                    itemCounts[item.name] += item.quantity;
+                });
+            });
+            
+            let bestSellerItem = 'None';
+            let bestSellerCount = 0;
+            
+            for (const [item, count] of Object.entries(itemCounts)) {
+                if (count > bestSellerCount) {
+                    bestSellerItem = item;
+                    bestSellerCount = count;
+                }
+            }
+            
+            if (bestSellerItem !== 'None') {
+                bestSeller.textContent = bestSellerItem;
+                bestSellerStats.textContent = `${bestSellerCount} orders`;
+            } else {
+                bestSeller.textContent = 'None';
+                bestSellerStats.textContent = 'No data yet';
+            }
+            
+            // Calculate changes from last week (would be real data in production)
+            if (restaurantData.orders.length > 0 || restaurantData.contacts.length > 0) {
+                orderChange.textContent = `Data collection active`;
+                revenueChange.textContent = `Data collection active`;
+                customerChange.textContent = `Data collection active`;
+            } else {
+                orderChange.textContent = `No data yet`;
+                revenueChange.textContent = `No data yet`;
+                customerChange.textContent = `No data yet`;
+            }
+        }
+
+        async function initCharts() {
+            const restaurantData = await getRestaurantData();
+            
+            // Only show charts if we have data
+            if (restaurantData.orders.length > 0) {
+                document.getElementById('no-analytics-message').style.display = 'none';
+                document.getElementById('salesChart').style.display = 'block';
+                document.getElementById('productChart').style.display = 'block';
+                
+                // Sales Chart (Last 30 days)
+                const salesCtx = document.getElementById('salesChartCanvas').getContext('2d');
+                const salesData = generateSalesData(restaurantData);
+                
+                if (salesChart) salesChart.destroy();
+                salesChart = new Chart(salesCtx, {
+                    type: 'line',
+                    data: {
+                        labels: salesData.dates,
+                        datasets: [{
+                            label: 'Daily Revenue',
+                            data: salesData.amounts,
+                            backgroundColor: 'rgba(139, 69, 19, 0.2)',
+                            borderColor: 'rgba(139, 69, 19, 1)',
+                            borderWidth: 2,
+                            tension: 0.1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+                
+                // Product Chart (Top selling items)
+                const productCtx = document.getElementById('productChartCanvas').getContext('2d');
+                const productData = generateProductData(restaurantData);
+                
+                if (productChart) productChart.destroy();
+                productChart = new Chart(productCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: productData.items,
+                        datasets: [{
+                            label: 'Items Sold',
+                            data: productData.quantities,
+                            backgroundColor: 'rgba(160, 82, 45, 0.7)',
+                            borderColor: 'rgba(160, 82, 45, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+                
+                // Customer Chart (New vs Returning)
+                const customerCtx = document.getElementById('customerChartCanvas').getContext('2d');
+                const customerData = generateCustomerData(restaurantData);
+                
+                if (customerChart) customerChart.destroy();
+                customerChart = new Chart(customerCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['New Customers', 'Returning Customers'],
+                        datasets: [{
+                            data: [customerData.newCustomers, customerData.returningCustomers],
+                            backgroundColor: [
+                                'rgba(139, 69, 19, 0.7)',
+                                'rgba(245, 222, 179, 0.7)'
+                            ],
+                            borderColor: [
+                                'rgba(139, 69, 19, 1)',
+                                'rgba(245, 222, 179, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            } else {
+                document.getElementById('no-analytics-message').style.display = 'block';
+                document.getElementById('salesChart').style.display = 'none';
+                document.getElementById('productChart').style.display = 'none';
+            }
+        }
+
+        function generateSalesData(restaurantData) {
+            const dates = [];
+            const amounts = [];
+            
+            // Generate last 30 days
+            for (let i = 29; i >= 0; i--) {
+                const date = new Date();
+                date.setDate(date.getDate() - i);
+                const dateString = date.toISOString().slice(0, 10);
+                dates.push(date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+                
+                // Calculate revenue for this day
+                const dailyRevenue = restaurantData.orders
+                    .filter(order => order.date.slice(0, 10) === dateString)
+                    .reduce((sum, order) => sum + order.total, 0);
+                
+                amounts.push(dailyRevenue);
+            }
+            
+            return { dates, amounts };
+        }
+
+        function generateProductData(restaurantData) {
+            const itemCounts = {};
+            
+            restaurantData.orders.forEach(order => {
+                order.items.forEach(item => {
+                    if (!itemCounts[item.name]) {
+                        itemCounts[item.name] = 0;
+                    }
+                    itemCounts[item.name] += item.quantity;
+                });
+            });
+            
+            // Sort items by quantity sold
+            const sortedItems = Object.entries(itemCounts).sort((a, b) => b[1] - a[1]);
+            
+            // Get top 5 items or all if less than 5
+            const topItems = sortedItems.slice(0, 5);
+            
+            return {
+                items: topItems.map(item => item[0]),
+                quantities: topItems.map(item => item[1])
+            };
+        }
+
+        function generateCustomerData(restaurantData) {
+            let newCustomers = 0;
+            let returningCustomers = 0;
+            
+            Object.values(restaurantData.customers).forEach(customer => {
+                if (customer.orderCount > 1) {
+                    returningCustomers++;
+                } else {
+                    newCustomers++;
+                }
+            });
+            
+            return { newCustomers, returningCustomers };
+        }
+
+        async function editOrder(orderId) {
+            const restaurantData = await getRestaurantData();
+            const order = restaurantData.orders.find(o => o.id === orderId);
+            if (order) {
+                const newStatus = prompt('Change order status (pending/completed):', order.status);
+                if (newStatus && ['pending', 'completed'].includes(newStatus.toLowerCase())) {
+                    order.status = newStatus.toLowerCase();
+                    saveRestaurantData(restaurantData);
+                    
+                    try {
+                        const response = await fetch(`http://localhost:3000/api/orders/${orderId}`, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ status: newStatus })
+                        });
+
+                        if (!response.ok) {
+                            const errorData = await response.json();
+                            console.error('Server responded with:', response.status, errorData);
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                    } catch (error) {
+                        console.error('Full error details:', {
+                            error: error.message,
+                            orderId,
+                            newStatus,
+                            timestamp: new Date().toISOString()
+                        });
+                    }
+                    loadOrders(document.getElementById('orderFilter').value);
+                }
+            }
+        }
+
+        async function viewOrder(orderId) {
+            const restaurantData = await getRestaurantData();
+            const order = restaurantData.orders.find(o => o.id === orderId);
+            if (order) {
+                let message = `Order #${order.id}\n`;
+                message += `Customer: ${order.customerName}\n`;
+                message += `Phone: ${order.customerPhone}\n`;
+                message += `Address: ${order.customerAddress}\n`;
+                message += `Date: ${new Date(order.date).toLocaleString()}\n`;
+                message += `Status: ${order.status}\n\n`;
+                message += `Items:\n`;
+                
+                order.items.forEach(item => {
+                    message += `- ${item.name} (${item.quantity} × ${item.price.toFixed(2)} Dh)\n`;
+                });
+                
+                message += `\nTotal: ${order.total.toFixed(2)} Dh`;
+                
+                alert(message);
+            }
+        }
+
+        async function deleteOrder(orderId) {
+            if (confirm('Are you sure you want to delete this order?')) {
+                const restaurantData = await getRestaurantData();
+                const orderIndex = restaurantData.orders.findIndex(order => order.id === orderId);
+                if (orderIndex > -1) {
+                    restaurantData.orders.splice(orderIndex, 1);
+                    saveRestaurantData(restaurantData);
+                    
+                    try {
+                        // Delete from server if available
+                        await fetch(`http://localhost:3000/api/orders/${orderId}`, {
+                            method: 'DELETE'
+                        });
+                    } catch (error) {
+                        console.error('Error deleting order from server:', error);
+                    }
+                    
+                    loadOrders(document.getElementById('orderFilter').value);
+                    updateSummary();
+                    initCharts();
+                }
+            }
+        }
+
+        async function completeOrder(orderId) {
+            const restaurantData = await getRestaurantData();
+            const order = restaurantData.orders.find(o => o.id === orderId);
+            if (order) {
+                order.status = 'completed';
+                saveRestaurantData(restaurantData);
+                
+                try {
+                    // Update on server if available
+                    await fetch(`http://localhost:3000/api/orders/${orderId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ status: 'completed' })
+                    });
+                } catch (error) {
+                    console.error('Error completing order on server:', error);
+                }
+                
+                loadOrders(document.getElementById('orderFilter').value);
+            }
+        }
+
+        // Contact Form Functions
+        async function viewContact(contactId) {
+            const restaurantData = await getRestaurantData();
+            const contact = restaurantData.contacts.find(c => c.id === contactId);
+            if (contact) {
+                let message = `Contact Form Submission #${contact.id}\n`;
+                message += `Date: ${new Date(contact.date).toLocaleString()}\n`;
+                message += `Name: ${contact.name}\n`;
+                message += `Email: ${contact.email || 'N/A'}\n`;
+                message += `Phone: ${contact.phone || 'N/A'}\n`;
+                message += `Subject: ${contact.subject || 'No subject'}\n\n`;
+                message += `Message:\n${contact.message}`;
+                
+                alert(message);
+                
+                // Mark as read when viewed
+                if (!contact.read) {
+                    await markContactRead(contactId, true);
+                }
+            }
+        }
+
+        async function markContactRead(contactId, readStatus) {
+            const restaurantData = await getRestaurantData();
+            const contact = restaurantData.contacts.find(c => c.id === contactId);
+            if (contact) {
+                contact.read = readStatus;
+                saveRestaurantData(restaurantData);
+                
+                try {
+                    // Update on server if available
+                    await fetch(`http://localhost:3000/api/contacts/${contactId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ read: readStatus })
+                    });
+                } catch (error) {
+                    console.error('Error updating contact on server:', error);
+                }
+                
+                loadContacts(document.getElementById('contactFilter').value);
+            }
+        }
+
+        async function deleteContact(contactId) {
+            if (confirm('Are you sure you want to delete this contact form submission?')) {
+                const restaurantData = await getRestaurantData();
+                const contactIndex = restaurantData.contacts.findIndex(contact => contact.id === contactId);
+                if (contactIndex > -1) {
+                    restaurantData.contacts.splice(contactIndex, 1);
+                    saveRestaurantData(restaurantData);
+                    
+                    try {
+                        // Delete from server if available
+                        await fetch(`http://localhost:3000/api/contacts/${contactId}`, {
+                            method: 'DELETE'
+                        });
+                    } catch (error) {
+                        console.error('Error deleting contact from server:', error);
+                    }
+                    
+                    loadContacts(document.getElementById('contactFilter').value);
+                }
+            }
+        }
+
+        async function filterOrders() {
+            const filterValue = document.getElementById('orderFilter').value;
+            await loadOrders(filterValue);
+        }
+
+        async function filterContacts() {
+            const filterValue = document.getElementById('contactFilter').value;
+            await loadContacts(filterValue);
+        }
+
+        async function exportOrders() {
+            const restaurantData = await getRestaurantData();
+            const dataStr = JSON.stringify(restaurantData.orders, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = `di-waita-orders-${new Date().toISOString().slice(0,10)}.json`;
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+        }
+
+        async function exportContacts() {
+            const restaurantData = await getRestaurantData();
+            const dataStr = JSON.stringify(restaurantData.contacts, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = `di-waita-contacts-${new Date().toISOString().slice(0,10)}.json`;
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+        }
+
+        function switchTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Deactivate all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Activate selected tab
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+            document.querySelector(`.tab[onclick="switchTab('${tabName}')"]`).classList.add('active');
+            
+            // Refresh data if needed
+            if (tabName === 'orders') {
+                loadOrders(document.getElementById('orderFilter').value);
+            } else if (tabName === 'customers') {
+                loadCustomers();
+            } else if (tabName === 'contacts') {
+                loadContacts(document.getElementById('contactFilter').value);
+            } else if (tabName === 'analytics') {
+                initCharts();
+            }
+        }
+
+        async function loadSettings() {
+            const restaurantData = await getRestaurantData();
+            document.getElementById('collectUser Data').checked = restaurantData.settings.collectUserData;
+            document.getElementById('trackBehavior').checked = restaurantData.settings.trackBehavior;
+            document.getElementById('storeOrderHistory').checked = restaurantData.settings.storeOrderHistory;
+            document.getElementById('storeContactForms').checked = restaurantData.settings.storeContactForms;
+        }
+
+        async function saveSettings() {
+            const restaurantData = await getRestaurantData();
+            restaurantData.settings.collectUserData = document.getElementById('collectUser Data').checked;
+            restaurantData.settings.trackBehavior = document.getElementById('trackBehavior').checked;
+            restaurantData.settings.storeOrderHistory = document.getElementById('storeOrderHistory').checked;
+            restaurantData.settings.storeContactForms = document.getElementById('storeContactForms').checked;
+            
+            saveRestaurantData(restaurantData);
+            alert('Settings saved successfully!');
+        }
+
+        async function exportAllData() {
+            const restaurantData = await getRestaurantData();
+            const dataStr = JSON.stringify(restaurantData, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = `di-waita-data-${new Date().toISOString().slice(0,10)}.json`;
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+        }
+
+        async function importData() {
+            const fileInput = document.getElementById('dataFile');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('Please select a file first');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    localStorage.setItem('restaurantData', JSON.stringify(importedData));
+                    await loadDashboard();
+                    alert('Data imported successfully!');
+                } catch (error) {
+                    alert('Error importing data: ' + error.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // This function can be called from other pages to record orders
+        async function recordOrder(orderData) {
+            let restaurantData = JSON.parse(localStorage.getItem('restaurantData')) || {
+                orders: [],
+                contacts: [],
+                customers: {},
+                settings: {
+                    collectUserData: true,
+                    trackBehavior: true,
+                    storeOrderHistory: true,
+                    storeContactForms: true
+                },
+                analytics: {
+                    pageViews: {},
+                    popularItems: {},
+                    conversionRates: {}
+                },
+                nextOrderId: 1,
+                nextContactId: 1
+            };
+
+            // Assign order ID
+            orderData.id = restaurantData.nextOrderId++;
+            orderData.date = new Date().toISOString();
+            orderData.status = 'pending';
+
+            // Add to orders
+            restaurantData.orders.push(orderData);
+
+            // Update customer data
+            const customerKey = orderData.customerPhone || orderData.customerEmail;
+            if (!restaurantData.customers[customerKey]) {
+                restaurantData.customers[customerKey] = {
+                    name: orderData.customerName,
+                    email: orderData.customerEmail || '',
+                    phone: orderData.customerPhone || '',
+                    address: orderData.customerAddress || '',
+                    orderCount: 0,
+                    totalSpent: 0,
+                    lastOrder: ""
+                };
+            }
+
+            restaurantData.customers[customerKey].orderCount++;
+            restaurantData.customers[customerKey].totalSpent += orderData.total;
+            restaurantData.customers[customerKey].lastOrder = orderData.date;
+
+            // Track popular items
+            orderData.items.forEach(item => {
+                if (!restaurantData.analytics.popularItems[item.name]) {
+                    restaurantData.analytics.popularItems[item.name] = 0;
+                }
+                restaurantData.analytics.popularItems[item.name] += item.quantity;
+            });
+
+            // Track page view for today
+            const today = new Date().toISOString().slice(0, 10);
+            restaurantData.analytics.pageViews[today] = (restaurantData.analytics.pageViews[today] || 0) + 1;
+
+            // Save to localStorage
+            localStorage.setItem('restaurantData', JSON.stringify(restaurantData));
+
+            try {
+                // Try to send to server
+                const response = await fetch('http://localhost:3000/api/orders', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(orderData)
+                });
+
+                if (!response.ok) {
+                    console.error('Failed to save order to server');
+                }
+            } catch (error) {
+                console.error('Error saving order to server:', error);
+                // Order will remain in localStorage for sync later
+            }
+        }
+
+        // This function can be called from contact forms to record submissions
+        async function recordContactForm(contactData) {
+            let restaurantData = JSON.parse(localStorage.getItem('restaurantData')) || {
+                orders: [],
+                contacts: [],
+                customers: {},
+                settings: {
+                    collectUserData: true,
+                    trackBehavior: true,
+                    storeOrderHistory: true,
+                    storeContactForms: true
+                },
+                analytics: {
+                    pageViews: {},
+                    popularItems: {},
+                    conversionRates: {}
+                },
+                nextOrderId: 1,
+                nextContactId: 1
+            };
+
+            // Check if we should store contact forms
+            if (!restaurantData.settings.storeContactForms) {
+                return;
+            }
+
+            // Assign contact ID
+            contactData.id = restaurantData.nextContactId++;
+            contactData.date = new Date().toISOString();
+            contactData.read = false;
+
+            // Add to contacts
+            restaurantData.contacts.push(contactData);
+
+            // Save to localStorage
+            localStorage.setItem('restaurantData', JSON.stringify(restaurantData));
+
+            try {
+                // Try to send to server
+                const response = await fetch('http://localhost:3000/api/contacts', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(contactData)
+                });
+
+                if (!response.ok) {
+                    console.error('Failed to save contact to server');
+                }
+            } catch (error) {
+                console.error('Error saving contact to server:', error);
+                // Contact will remain in localStorage for sync later
+            }
+        }
+
+        // This function would be called from other pages to track page views
+        function trackPageView(pageName) {
+            const restaurantData = JSON.parse(localStorage.getItem('restaurantData')) || {
+                settings: {
+                    collectUserData: true
+                },
+                analytics: {
+                    pageViews: {}
+                }
+            };
+
+            if (!restaurantData.settings?.collectUserData) return;
+
+            const today = new Date().toISOString().slice(0, 10);
+            restaurantData.analytics.pageViews[today] = (restaurantData.analytics.pageViews[today] || 0) + 1;
+
+            localStorage.setItem('restaurantData', JSON.stringify(restaurantData));
+
+            try {
+                // Optionally send to server if you want to track page views there
+                fetch('http://localhost:3000/api/pageviews', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        page: pageName,
+                        date: today
+                    })
+                });
+            } catch (error) {
+                console.error('Error tracking page view:', error);
+            }
+        }
+
+        // Load dashboard when page loads
+        window.onload = loadDashboard;
+    </script>
+</body>
+</html>

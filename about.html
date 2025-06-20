@@ -1,0 +1,1053 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - The Majuch Restaurant</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #e74c3c;
+            --secondary-color: #f39c12;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--text-color);
+            color: var(--text-color);
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 30px;
+            animation: fadeIn 1s ease-in;
+            background-color: #e8e3e3;
+
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--light-color);
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+        
+        .about-intro {
+            text-align: center;
+            margin-bottom: 4rem;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+        }
+        
+        .about-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 4rem;
+            gap: 2rem;
+        }
+        
+        .about-card {
+            flex: 0 0 calc(50% - 1rem);
+            background: white;
+            padding: 2.5rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(47, 19, 206, 0.909);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .about-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        
+        .about-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--secondary-color);
+        }
+        
+        .about-card ul {
+            margin-top: 1rem;
+            margin-left: 1.8rem;
+        }
+        
+        .about-card ul li {
+            margin-bottom: 0.8rem;
+            position: relative;
+        }
+        
+        .about-card ul li::before {
+            content: '•';
+            color: var(--secondary-color);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+        
+        /* New Sections */
+        .achievements {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin: 4rem 0;
+            border-radius: 10px;
+        }
+        
+        .achievements h2 {
+            color: white;
+            margin-bottom: 2rem;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .stat-item {
+            padding: 1.5rem;
+            min-width: 200px;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--light-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .testimonials {
+            margin: 4rem 0;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .testimonial-card {
+            background: rgba(146, 180, 183, 0.815);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(97, 227, 21, 0.921);
+            position: relative;
+        }
+        
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 5rem;
+            color: rgba(245, 236, 235, 0.889);
+            font-family: serif;
+            line-height: 1;
+        }
+        
+        .testimonial-content {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .testimonial-author img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 1rem;
+            border: 2px solid var(--secondary-color);
+        }
+        
+        .author-info h4 {
+            margin-bottom: 0.2rem;
+            color: var(--secondary-color);
+        }
+        
+        .author-info p {
+            color: #35ceed;
+            font-size: 0.9rem;
+        }
+        
+        .team-section {
+            text-align: center;
+            margin: 5rem 0;
+        }
+        
+        .team-members {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+        
+        .team-member {
+            width: 250px;
+            transition: transform 0.3s ease;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-10px);
+        }
+        
+        .team-member-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--secondary-color);
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 10px 25px rgba(235, 225, 225, 0.924);
+            transition: all 0.3s ease;
+        }
+        
+        .team-member:hover .team-member-img {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        
+        .team-member h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .team-member p {
+            color: #e8e3e3;
+            margin-bottom: 1rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .social-links a {
+            color: var(--dark-color);
+            background: var(--light-color);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background: var(--secondary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        .gallery-section {
+            margin: 5rem 0;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .gallery-item {
+            height: 250px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 5px 15px lch(84.14% 44.26 178.31 / 0.955);
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover {
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 1rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            padding: 4rem 0 0;
+            position: relative;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 0 30px;
+        }
+        
+        .footer-section {
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1.8rem;
+            font-size: 1.3rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--secondary-color);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-section ul li a {
+            color: var(--light-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: inline-block;
+        }
+        
+        .footer-section ul li a:hover {
+            color: var(--secondary-color);
+            transform: translateX(5px);
+        }
+        
+        .contact-info p {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .contact-info i {
+            margin-right: 10px;
+            color: var(--secondary-color);
+            margin-top: 3px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .footer-social a {
+            color: var(--light-color);
+            background: rgba(255,255,255,0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-social a:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+        
+        .newsletter-form input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 1rem;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+        
+        .newsletter-form input::placeholder {
+            color: #ccc;
+        }
+        
+        .newsletter-form button {
+            width: 100%;
+            padding: 12px;
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+        
+        .newsletter-form button:hover {
+            background: #e67e22;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        h2{
+            background-color: #2c3e50;
+            content: var(--bg-color);
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 99;
+        }
+        
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #c0392b;
+            transform: translateY(-5px);
+        }
+        
+        @media (max-width: 768px) {
+            .navbar ul li {
+                margin: 0 10px;
+            }
+            
+            .about-card {
+                flex: 0 0 100%;
+            }
+            
+            .container {
+                padding: 0 20px;
+            }
+            
+            .stat-item {
+                min-width: 150px;
+                padding: 1rem;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .navbar ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .navbar ul li {
+                margin: 5px 0;
+            }
+            
+            .team-member {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <ul>
+            <li><a href="menu.html">Home</a></li>
+            <li><a href="About.html">About Us</a></li>
+            <li><a href="contact.menu.html">Contact</a></li>
+            <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
+            <li><a href="https://instagram.com" target="_blank">Instagram</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <h1>About The Majuch Restaurant</h1>
+        
+        <div class="about-intro">
+            <p>Welcome to The Majuch Restaurant, where culinary excellence meets warm hospitality. Since our founding in 2020, we've been committed to serving freshly made dishes with love and passion. Quality ingredients and customer satisfaction are at the heart of everything we do.</p>
+        </div>
+        
+        <div class="about-section">
+            <div class="about-card">
+                <h2>Our Vision</h2>
+                <p>To be the most beloved restaurant in our community, recognized for our innovative cuisine, exceptional service, and commitment to sustainable practices. We aim to create memorable dining experiences that bring people together and celebrate local flavors with a global twist.</p>
+            </div>
+            
+            <div class="about-card">
+                <h2>Our Mission</h2>
+                <p>To delight our guests with authentic, high-quality dishes prepared from locally-sourced ingredients. We are dedicated to:</p>
+                <ul>
+                    <li>Supporting local farmers and producers</li>
+                    <li>Maintaining the highest standards of food safety</li>
+                    <li>Providing exceptional customer service</li>
+                    <li>Creating a welcoming atmosphere for all</li>
+                    <li>Continuously innovating our menu offerings</li>
+                </ul>
+            </div>
+            
+            <div class="about-card">
+                <h2>Our Story</h2>
+                <p>The Majuch restuarant began as a small family-owned eatery with just five tables. Founded by chef Mandela Majuch Khor and hospitality expert Mandela Khor Majuch, our restaurant has grown into a local favorite through word-of-mouth and our commitment to quality. What started as a passion project has blossomed into a thriving culinary destination that stays true to its roots while embracing innovation.</p>
+            </div>
+            
+            <div class="about-card">
+                <h2>Our Values</h2>
+                <p><strong>Quality:</strong> We never compromise on ingredients or preparation methods.</p>
+                <p><strong>Community:</strong> We're proud to be part of the local business ecosystem.</p>
+                <p><strong>Sustainability:</strong> We minimize waste and prioritize eco-friendly practices.</p>
+                <p><strong>Innovation:</strong> We constantly explore new flavors and techniques.</p>
+                <p><strong>Hospitality:</strong> Every guest is treated like family.</p>
+            </div>
+        </div>
+        
+        <!-- New Achievements Section -->
+        <div class="achievements">
+            <h2>Our Achievements</h2>
+            <p>Proud moments and recognition that inspire us to keep delivering excellence</p>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">15K+</div>
+                    <div class="stat-label">Years of Experience</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100K+</div>
+                    <div class="stat-label">Team Members</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">10K+</div>
+                    <div class="stat-label">Happy Customers</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">25K+</div>
+                    <div class="stat-label">Awards Won</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- New Testimonials Section -->
+        
+        
+               <!-- Team Section -->
+        <div class="team-section">
+            <h2>Meet Our Culinary Team</h2>
+            <p>Our talented chefs bring diverse experience and shared passion to every dish we serve</p>
+            
+            <div class="team-members">
+                <div class="team-member">
+                    <img src="images/mandela.jpg" alt="Chef Mandela Majuch Khor" class="team-member-img">
+                    <h3> Eng. Mandela Majuch Khor</h3>
+                    <p>Executive Chef & Co-Founder</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <img src="images/celin.jpg" alt="Mandela Khor Majuch" class="team-member-img">
+                    <h3> Dr. Celin Mandela Khor </h3>
+                    <p>Pastry Chef & Co-Founder</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+             </div>   
+
+        </div>
+        <!-- New Gallery Section -->
+        <div class="gallery-section">
+            <h2>Our Restaurant Gallery</h2>
+            <p>A glimpse into our world of culinary excellence</p>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Restaurant Interior">
+                    <div class="gallery-caption">Elegant Dining Space</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Chef Preparing Food">
+                    <div class="gallery-caption">Our Chef in Action</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Signature Dish">
+                    <div class="gallery-caption">Signature Dish</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1571115177098-24ec42ed204d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Dessert Selection">
+                    <div class="gallery-caption">Artisan Desserts</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Bar Area">
+                    <div class="gallery-caption">Craft Cocktail Bar</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Dining Experience">
+                    <div class="gallery-caption">Memorable Dining</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Chef Preparing Food">
+                    <div class="gallery-caption">Our Chef in Action</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Bar Area">
+                    <div class="gallery-caption">Craft Cocktail Bar</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="menu.html">Home</a></li>
+                    <li><a href="About.html">About Us</a></li>
+                    <li><a href="contact.menu.html">Contact</a></li>
+                    <li><a href="career.html">Careers</a></li>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="private.html">Private Events</a></li>
+                    <li><a href="reserve.html">Reservations</a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="footer-section">
+                <h3>Hours</h3>
+                <ul>
+                    <li><strong>Monday - Thursday:</strong> 11am - 10pm</li>
+                    <li><strong>Friday - Saturday:</strong> 11am - 11pm</li>
+                    <li><strong>Sunday:</strong> 10am - 9pm</li>
+                    <li><strong>Brunch:</strong> Sat-Sun 10am-2pm</li>
+                    <li><strong>Happy Hour:</strong> Mon-Fri 4pm-6pm</li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Newsletter</h3>
+                <p>Subscribe to receive updates on special events, promotions, and seasonal menus.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Your email address" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 The Majuch Restaurant. All rights reserved</p>
+        </div>
+    </footer>
+    
+    <a href="#" class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></a>
+    
+    <script>
+        // Back to top button functionality
+        window.addEventListener('scroll', function() {
+            var backToTop = document.getElementById('backToTop');
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('active');
+            } else {
+                backToTop.classList.remove('active');
+            }
+        });
+        
+        // Smooth scrolling for all links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+     </style>
+
+    <!-- Add this right before the closing </body> tag -->
+<div class="chat-container">
+    <button class="chat-toggle-btn" id="chatToggle">
+        <i class="fas fa-comments"></i>
+    </button>
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <h3>Guest Feedback</h3>
+            <button class="close-chat" id="closeChat">&times;</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <!-- Messages will appear here -->
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chatMessageInput" placeholder="Type your message...">
+            <button id="sendMessageBtn"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Chat Container Styles */
+    .chat-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+    }
+    
+    .chat-toggle-btn {
+        background-color: red;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+    }
+    
+    .chat-toggle-btn:hover {
+        background-color: var(--accent-color);
+        transform: scale(1.1);
+    }
+    
+    .chat-window {
+        display: none;
+        width: 350px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+    }
+    
+    .chat-header {
+        background-color: green;
+        color: white;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .chat-header h3 {
+        margin: 0;
+        font-size: 1.2rem;
+    }
+    
+    .close-chat {
+        background: none;
+        border: none;
+        color: yellow;
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+    
+    .chat-messages {
+        height: 300px;
+        overflow-y: auto;
+        padding: 15px;
+        background-color: var(--light-color);
+    }
+    
+    .message {
+        margin-bottom: 15px;
+        padding: 10px 15px;
+        border-radius: 18px;
+        max-width: 80%;
+        word-wrap: break-word;
+    }
+    
+    .guest-message {
+        background-color: black;
+        border: 1px solid #ddd;
+        margin-left: auto;
+        border-top-right-radius: 5px;
+    }
+    
+    .admin-message {
+        background-color: var(--secondary-color);
+        margin-right: auto;
+        border-top-left-radius: 5px;
+    }
+    
+    .message-time {
+        font-size: 0.7rem;
+        color: whitesmoke;
+        margin-top: 5px;
+        text-align: right;
+    }
+    
+    .chat-input {
+        display: flex;
+        padding: 10px;
+        background-color: white;
+        border-top: 1px solid #eee;
+    }
+    
+    .chat-input input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        outline: none;
+    }
+    
+    .chat-input button {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        margin-left: 10px;
+        cursor: pointer;
+    }
+    
+    .chat-input button:hover {
+        background-color: purple;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 480px) {
+        .chat-window {
+            width: 300px;
+            right: 10px;
+            bottom: 80px;
+        }
+        
+        .chat-messages {
+            height: 250px;
+        }
+    }
+</style>
+
+<script>
+    // Chat functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const chatToggle = document.getElementById('chatToggle');
+        const chatWindow = document.getElementById('chatWindow');
+        const closeChat = document.getElementById('closeChat');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatMessageInput = document.getElementById('chatMessageInput');
+        const sendMessageBtn = document.getElementById('sendMessageBtn');
+        
+        // Load saved messages
+        loadChatMessages();
+        
+        // Toggle chat window
+        chatToggle.addEventListener('click', function() {
+            chatWindow.style.display = chatWindow.style.display === 'block' ? 'none' : 'block';
+        });
+        
+        closeChat.addEventListener('click', function() {
+            chatWindow.style.display = 'none';
+        });
+        
+        // Send message
+        function sendMessage() {
+            const messageText = chatMessageInput.value.trim();
+            if (messageText === '') return;
+            
+            const message = {
+                text: messageText,
+                sender: 'guest',
+                timestamp: new Date().toISOString()
+            };
+            
+            // Add to UI
+            addMessageToChat(message);
+            
+            // Save to localStorage
+            saveMessage(message);
+            
+            // Clear input
+            chatMessageInput.value = '';
+            
+            // Simulate admin response after 2 seconds
+            setTimeout(() => {
+                const responses = [
+                    "Thank you for your feedback!",
+                    "We appreciate your message!",
+                    "Our team will review your comments.",
+                    "Thanks for reaching out to us!",
+                    "We value your input!"
+                ];
+                
+                const adminMessage = {
+                    text: responses[Math.floor(Math.random() * responses.length)],
+                    sender: 'admin',
+                    timestamp: new Date().toISOString()
+                };
+                
+                addMessageToChat(adminMessage);
+                saveMessage(adminMessage);
+            }, 2000);
+        }
+        
+        // Send message on button click or Enter key
+        sendMessageBtn.addEventListener('click', sendMessage);
+        chatMessageInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        // Add message to chat UI
+        function addMessageToChat(message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message');
+            messageDiv.classList.add(message.sender + '-message');
+            
+            const time = new Date(message.timestamp);
+            const timeString = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            messageDiv.innerHTML = `
+                <div>${message.text}</div>
+                <div class="message-time">${timeString}</div>
+            `;
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // Save message to localStorage
+        function saveMessage(message) {
+            let messages = JSON.parse(localStorage.getItem('di-waita-chat-messages')) || [];
+            messages.push(message);
+            localStorage.setItem('di-waita-chat-messages', JSON.stringify(messages));
+            
+            // Also save to restaurant data
+            saveToRestaurantData(message);
+        }
+        
+        // Load messages from localStorage
+        function loadChatMessages() {
+            const messages = JSON.parse(localStorage.getItem('di-waita-chat-messages')) || [];
+            messages.forEach(message => {
+                addMessageToChat(message);
+            });
+        }
+        
+        // Save to restaurant data for dashboard
+        function saveToRestaurantData(message) {
+            let restaurantData = JSON.parse(localStorage.getItem('restaurantData')) || {
+                feedback: [],
+                customers: {},
+                nextFeedbackId: 1
+            };
+            
+            if (message.sender === 'guest') {
+                const feedback = {
+                    id: restaurantData.nextFeedbackId++,
+                    message: message.text,
+                    timestamp: message.timestamp,
+                    status: 'new',
+                    response: ''
+                };
+                
+                restaurantData.feedback.push(feedback);
+                localStorage.setItem('restaurantData', JSON.stringify(restaurantData));
+            }
+        }
+    });
+</script>
+</body>
+</html>
