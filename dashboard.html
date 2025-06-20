@@ -199,6 +199,46 @@
             color: #333;
         }
 
+        .navbar {
+  background-color: #111;
+  padding: 10px;
+  position: relative;
+}
+
+.menu-toggle {
+  font-size: 24px;
+  color: orange;
+  display: none;
+  cursor: pointer;
+}
+
+/* Hide the nav-links by default on mobile */
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background: #111;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    padding: 10px;
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+}
+
         @media (max-width: 768px) {
             .summary {
                 flex-direction: column;
