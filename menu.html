@@ -36,27 +36,55 @@
         }
         
         /* Navigation */
-   .navbar {
-            background-color: rgba(0, 0, 0, 0.8);
-            position: fixed;
-            width: 100%;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-            padding: 1rem 0;
-            transition: var(--transition);
-        }
-        
-        .navbar.scrolled {
-            background-color: rgba(0, 0, 0, 0.95);
-            padding: 0.5rem 0;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-        }
-        
-        .navbar-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+  :root {
+  --transition: all 0.3s ease;
+}
+
+.navbar {
+  background-color: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  padding: 0.4rem 0; /* 🔽 Reduced height */
+  transition: var(--transition);
+}
+
+.navbar.scrolled {
+  background-color: rgba(0, 0, 0, 0.95);
+  padding: 0.2rem 0; /* 🔽 Even smaller when scrolled */
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem; /* 🔽 Reduced side padding */
+}
+
+.navbar a {
+  font-size: 0.9rem;       /* 🔽 Smaller text */
+  padding: 0.3rem 0.6rem;  /* 🔽 Less internal spacing */
+  color: white;
+  text-decoration: none;
+}
+
+.navbar a:hover {
+  color: #ffcc00;
+}
+
+/* Optional: adjust further for small screens */
+@media (max-width: 600px) {
+  .navbar a {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .navbar-container {
+    padding: 0 0.5rem;
+  }
+}
 
         
         /* Hero Section */
